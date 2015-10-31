@@ -1,0 +1,6 @@
+<div>
+	<span><strong>{label}</strong></span>
+</div>
+{#items}
+	hidden item!
+{/items}

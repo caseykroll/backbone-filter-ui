@@ -1,0 +1,10 @@
+<div>
+	<span><strong>{label}</strong></span>
+</div>
+<div class="select">
+	<select>
+		{#options}
+			<option {?disabled}disabled{/disabled} {?active}selected{/active} {?value}value="{value}"{/value}>{label} {?value}({peekCount}){/value}</option>
+		{/options}
+	</select>
+</div>

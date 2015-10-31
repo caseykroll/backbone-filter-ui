@@ -1,0 +1,5 @@
+<div class="radio">
+	<label>
+    	<input type="radio" {?active}checked{/active} {?disabled}disabled{/disabled} name='{property}' value='{value}'>{label}</input> <span>({peekCount})</span>
+	</label>
+</div>
