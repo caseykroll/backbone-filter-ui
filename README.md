@@ -9,6 +9,8 @@ How to run this:
 Get Node
 https://nodejs.org/en/download/
 
-Navigate to the root of the project and run > node app.js
+Navigate to the root of the project and run > 
+npm install
+node app.js
 
 Point yourself at http://localhost:8080/filters.html
