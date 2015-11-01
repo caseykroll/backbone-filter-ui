@@ -1,8 +1,58 @@
 # backbone-filter-ui
-PoC for filtering backbone collections, with a sample app using bootstrap, dustjs, maybe a few other things.
+PoC for filtering backbone collections, with a sample app using requirejs, bootstrap, dustjs, maybe a few other things.
 
-This README is a good representation of the state of actual source.
-Come back later, there might be something worth looking at.
+Overview:
+
+We're looking for something akin to what most consumers are used to seeing on large retailer sites, where items have multiple properties (e.g. cost, size, department, etc.),
+and filters, usually in a sidebar, are available on each of these properties to allow the items to be narrowed down quickly.
+
+There will be two major pieces in this:
+
+1. the filter script, which is the primary focus of this code, and which is responsible for:
+	- evaluating the item collection against a separate collection of filters
+	- updating the filter "matches" within the filter models, based on the result of the evaluation and the current state of the list
+	- returning a filtered version of the item collection based on the result of the evaluation.
+	- reacting to events on both the item and filter collections, re-evaluating the filter results
+
+2. the UI, which is really just useful for testing and demonstrating the filter script, and which is responsible for:
+	- requesting a filtered collection of items from the filter script
+	- updating the item list once the filter script has produced a filtered version of the list
+	- reacting to the updating of filter "matches" in order to re-render filters with updated information
+
+What does the data look like?
+
+- The list collection can be any Backbone.Collection, so long as each Backbone.Model in the collection has a unique 'id' attribute.
+
+- The filter collection needs to follow a particular format; for example:
+
+	var sizeFilter = new FilterModel({
+		id: 'size_filter', 		// arbitrary id for the filter
+		type: 'checkbox',  		// input type ('checkbox','radio', 'select')
+		label: 'Size',			// the label to display for the filter as a whole
+		evalType: 'data',		// how the evaluation will be done; 'data' compares the filter value to the item attribute
+		property: 'size',		// the attribute name on the items that the filter will be comparing its option value to
+		alwaysVisible: false,	// whether or not to display the filter even if there are no possible matches in the unfiltered list
+		filterOptions: [{		// different values within the filter, each managed independently
+			label : 'Small',		// the label to display for the indivual filterOption
+			value : 'sm',			// the value that will be evaluated against the item attribute matching the filter property
+			operation: 'equals'		// how the "match" will be evaluated; e.g. "equals" means the value matches excactly the item attribute value
+		},{
+			label : 'Medium',
+			value : 'md',
+			operation: 'equals'
+		}{
+			label : 'Large',
+			value : 'lg',
+			operation: 'equals'
+		}]
+	});
+
+	Once the evaluation is run, the filterOptions (which will be converted to Backbone.Models) will have additional attributes reflecting
+	matches: [] // an array of item ids which were found to match the filterOption
+	active: boolean // default is false, true when the option is "checked"
+	disabled: boolean // default is false, true when the selecting of other filter options excludes this option
+	peekCount: integer // TODO: This is a bad name, should really just be an integer representing how many matches are still available for this option, given which other options are active
+
 
 How to run this:
 
