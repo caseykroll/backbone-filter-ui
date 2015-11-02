@@ -31,34 +31,27 @@ define(['backbone', 'underscore'], function(Backbone, _){
 
 		var self = this;
 
+		// the array of models to return as the filtered collection
+		var models = [];
+
+		var filterMatchMap = {}; // matches by filter (not by filterOption)
 		var hiddenMatches = [];
 
+		// determine which items are hidden (attribute {hidden: true})
 		if (this.configuration.hiddenFilter){
 			hiddenMatches = this.getHiddenMatches();
 		}
 
-		var filterMatches = [];
-		var filterMatchMap = {}; // this is preferred, if we can get by not use filterMatches
-
-		//TODO: get the active filter in a variable; then we don't need to determine this multiple times
-
-		// determine which filters are active
+		// determine which filters are currently active
 		this.filters.each(function(filter){
-
 			if (filter.isActive()){
 				var filterModelMatches = filter.getFilterMatches();
-				filterMatches.push(_.uniq(filterModelMatches));
 				filterMatchMap[filter.get('id')] = filterModelMatches;
 			}
-
 		});
 
-		// filterMatches represents an array of filterMatches (which are also arrays).
-		// let's combine all of these and find the intersection, see which models match
-		// all of the filters
-		var matches = _.intersection.apply(this, filterMatches);
-
-		var models = [];
+		// get the full array of identifiers matching all of the active filters (unique results)
+		var matches = _.intersection.apply(this, _.values(filterMatchMap));
 
 
 		// BEGIN THOUGHT ****
