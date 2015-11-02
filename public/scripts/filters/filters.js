@@ -6,25 +6,22 @@ define(['backbone', 'underscore'], function(Backbone, _){
 		var options = options || {};
 
 		this.configuration = options.configuration || {};
+
+		// the full collection, not one used for rendering a filtered list.
 		this.collection = options.collection;
+
+		// the collection of filter configurations, with their options
 		this.filters = options.filters;
 
-		// THIS SHOULD NOT TRIGGER WITH FILTER SELECTION
-		this.filters.on('change', function(){
-			self.evaluateFilters();
+		this.filters.on('reset', function(){
+			self._evaluateFilters();
 		});
 
-		// THIS IS THE MASTER LIST OF ITEMS, 
-		// one you don't use for rendering
 		this.collection.on('reset', function(){
-			self.evaluateFilters();
+			self._evaluateFilters();
 		});
 
-		this.evaluateFilters();
-	};
-
-	FiltersPlugin.prototype.getHiddenMatches = function() {
-		return _.pluck(this.collection.where({hidden: true}), 'id');
+		this._evaluateFilters();
 	};
 
 	FiltersPlugin.prototype.getFilteredCollection = function() {
@@ -39,7 +36,7 @@ define(['backbone', 'underscore'], function(Backbone, _){
 
 		// determine which items are hidden (attribute {hidden: true})
 		if (this.configuration.hiddenFilter){
-			hiddenMatches = this.getHiddenMatches();
+			hiddenMatches = this._getHiddenMatches();
 		}
 
 		// determine which filters are currently active
@@ -104,16 +101,6 @@ define(['backbone', 'underscore'], function(Backbone, _){
 		return matches;
 	};
 
-	FiltersPlugin.prototype.evaluateFilters = function(){
-
-		var self = this;
-
-		// evaluate each filter option against the collection.
-		this.filters.each(function(filter){
-			filter.evaluateFilterOptions(self.collection);
-		});
-	};
-
 	FiltersPlugin.prototype.evaluateFilterOptionPeek = function(filter, filterOption, filterMatchMap, matches, hiddenMatches){
 
 		var disabled = true;
@@ -163,6 +150,31 @@ define(['backbone', 'underscore'], function(Backbone, _){
 			count: count,
 			disabled: disabled
 		});
+	};
+
+	/*
+	 * _evaluateFilters
+	 *	
+	 * Sets the "matches" onto the filterOption models.
+	 * This should only be called when the initial collections are reset.
+	 */
+	FiltersPlugin.prototype._evaluateFilters = function(){
+
+		var self = this;
+
+		// evaluate each filter option against the collection.
+		this.filters.each(function(filter){
+			filter.evaluateFilterOptions(self.collection);
+		});
+	};
+
+	/*
+	 * _getHiddenMatches
+	 *
+	 * This should only be called if the "hiddenFilter" configuration option is true.
+	 */
+	FiltersPlugin.prototype._getHiddenMatches = function() {
+		return _.pluck(this.collection.where({hidden: true}), 'id');
 	};
 
 	return FiltersPlugin;
