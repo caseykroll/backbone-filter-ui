@@ -1,6 +1,6 @@
 define(['backbone', 'underscore'], function(Backbone, _){
 
-	var FiltersPlugin = function(options) {
+	var FilterUtility = function(options) {
 
 		var self = this;
 		var options = options || {};
@@ -24,7 +24,7 @@ define(['backbone', 'underscore'], function(Backbone, _){
 		this._evaluateFilters();
 	};
 
-	FiltersPlugin.prototype.getFilteredCollection = function() {
+	FilterUtility.prototype.getFilteredCollection = function() {
 
 		var self = this;
 
@@ -94,14 +94,14 @@ define(['backbone', 'underscore'], function(Backbone, _){
 
 
 	// TODO: for peek, send the map without the option's filter
-	FiltersPlugin.prototype.getMatchSetFromMap = function(filterMatchMap) {
+	FilterUtility.prototype.getMatchSetFromMap = function(filterMatchMap) {
 
 		var filterMatches = _.values(filterMatchMap);
 		var matches = _.intersection.apply(this, filterMatches);
 		return matches;
 	};
 
-	FiltersPlugin.prototype.evaluateFilterOptionPeek = function(filter, filterOption, filterMatchMap, matches, hiddenMatches){
+	FilterUtility.prototype.evaluateFilterOptionPeek = function(filter, filterOption, filterMatchMap, matches, hiddenMatches){
 
 		var disabled = true;
 		var count = 0;
@@ -158,7 +158,7 @@ define(['backbone', 'underscore'], function(Backbone, _){
 	 * Sets the "matches" onto the filterOption models.
 	 * This should only be called when the initial collections are reset.
 	 */
-	FiltersPlugin.prototype._evaluateFilters = function(){
+	FilterUtility.prototype._evaluateFilters = function(){
 
 		var self = this;
 
@@ -173,9 +173,9 @@ define(['backbone', 'underscore'], function(Backbone, _){
 	 *
 	 * This should only be called if the "hiddenFilter" configuration option is true.
 	 */
-	FiltersPlugin.prototype._getHiddenMatches = function() {
+	FilterUtility.prototype._getHiddenMatches = function() {
 		return _.pluck(this.collection.where({hidden: true}), 'id');
 	};
 
-	return FiltersPlugin;
+	return FilterUtility;
 });
