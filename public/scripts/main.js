@@ -29,5 +29,5 @@ requirejs.config({
 
 
 requirejs(['backbone', 'list/list'], function(Backbone, list){
-	list.startup();
+	list.init();
 });

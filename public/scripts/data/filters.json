@@ -1,0 +1,21 @@
+[{
+	"id": "color_filter",
+	"type": "checkbox",
+	"label": "Color",
+	"evalType": "data", 
+	"property": "color",
+	"alwaysVisible": false,
+	"filterOptions": [{
+		"label": "Blue",
+		"value": "blue",
+		"operation":"equals"
+	},{
+		"label": "Green",
+		"value": "green",
+		"operation":"equals"
+	},{
+		"label": "Red",
+		"value": "red",
+		"operation":"equals"
+	}]
+}]

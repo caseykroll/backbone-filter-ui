@@ -7,12 +7,7 @@ define(['backbone', 'dust', 'text!templates/list/list.item.dust'], function(Back
 		render: function() {
 			var self = this;
 
-			var data = {
-				label: this.model.get('label'),
-				color: this.model.get('color'),
-				shape: this.model.get('shape'),
-				size: this.model.get('size')
-			};
+			var data = this.model.toJSON();
 
 			dust.renderSource(listItemTemplate, data, function(err, out){
 				// setting self.$el.html() drops the event bindings
