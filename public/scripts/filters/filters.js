@@ -89,7 +89,7 @@ define(['backbone', 'underscore'], function(Backbone, _){
 
 		var count = 0;
 
-		var filterOptionActive = filterOption.get('active');
+		// just for convenience here
 		var filterOptionMatches = filterOption.get('filterMatches');
 
 		var filterId = filter.get('id');
@@ -99,7 +99,7 @@ define(['backbone', 'underscore'], function(Backbone, _){
 		if (currentMatches.length === 0) {
 			count = _.difference(filterOptionMatches, hiddenMatches).length;
 		}
-		else if (filterOptionActive || !filterActive){
+		else if (filterOption.get('active') || !filterActive){
 			count = _.difference(_.intersection(filterOptionMatches, currentMatches), hiddenMatches).length;
 		} else {
 			// something else in the filter "group" has been selected; this is the most complicated case, because now we need 
