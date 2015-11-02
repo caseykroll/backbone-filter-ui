@@ -22,6 +22,8 @@ There will be two major pieces in this:
 What does the data look like?
 
 - The list collection can be any Backbone.Collection, so long as each Backbone.Model in the collection has a unique 'id' attribute.
+	- Optionally, if you wish to use a feature for showing and hiding list items, you just need to make use of a 'hidden' attribute on the item.
+
 
 - The filter collection needs to follow a particular format; for example:
 ```javascript
