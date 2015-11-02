@@ -1,5 +1,8 @@
 <li class="list-group-item">
 	<a class="_hide pull-right" href="javascript:void(0);">hide</a>
-	<div>{label}</div>
-	<div>{description}</div>
+	<div>
+		<strong>{label}</strong>
+	</div>
+	<div>{cost}</div>
+	<small>{description}</small>
 </li> 

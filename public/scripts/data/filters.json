@@ -10,12 +10,56 @@
 		"value": "blue",
 		"operation":"equals"
 	},{
-		"label": "Green",
-		"value": "green",
+		"label": "Brown",
+		"value": "brown",
 		"operation":"equals"
 	},{
 		"label": "Red",
 		"value": "red",
+		"operation":"equals"
+	}]
+},{
+	"id": "size_filter",
+	"type": "radio",
+	"label": "Size",
+	"evalType": "data", 
+	"property": "size",
+	"alwaysVisible": false,
+	"filterOptions": [{
+		"label": "Large",
+		"value": "lg",
+		"operation":"equals"
+	},{
+		"label": "Medium",
+		"value": "md",
+		"operation":"equals"
+	},{
+		"label": "Small",
+		"value": "sm",
+		"operation":"equals"
+	}]
+},{
+	"id": "material_filter",
+	"type": "select",
+	"label": "Material",
+	"evalType": "data", 
+	"property": "material",
+	"alwaysVisible": false,
+	"filterOptions": [{
+		"label": "Mahogany",
+		"value": "mahogany",
+		"operation":"equals"
+	},{
+		"label": "Maple",
+		"value": "maple",
+		"operation":"equals"
+	},{
+		"label": "Oak",
+		"value": "oak",
+		"operation":"equals"
+	},{
+		"label": "Pine",
+		"value": "pine",
 		"operation":"equals"
 	}]
 }]
