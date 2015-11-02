@@ -68,3 +68,13 @@ npm install
 node app.js
 
 Point yourself at http://localhost:8080/filters.html
+
+Outstanding issues:
+
+- (bug) multiple rendering on startup
+- (feature) filterOption operations for less than, greater than (numeric values)
+- (feature) filterOption operations for text matching (starts with, contains)
+- (feature) allow filters with pre-defined matches
+- (feature) defaults on init
+- (feature) defaults on "clear"
+- (feature) derive filterOptions based on set of initial collection values

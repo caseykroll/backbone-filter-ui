@@ -1,6 +1,5 @@
-<div>
-	<span><strong>{label}</strong></span>
-</div>
-{#items}
-	hidden item!
-{/items}
+{?hasMatch}
+	<div>
+		<span><strong>{label}</strong></span>
+	</div>
+{/hasMatch}

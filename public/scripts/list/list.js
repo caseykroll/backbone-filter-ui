@@ -13,7 +13,10 @@ define(['backbone', 'filters/filters','list/views/view.list', 'filters/views/vie
 			var filteredCollection = new Backbone.Collection();
 
 			// TODO: temp crap here.. apply this like a real plugin later on
-			var filtersUtil = new Filters(itemCollection, filterCollection);
+			var filtersUtil = new Filters({
+				collection: itemCollection, 
+				filters: filterCollection
+			});
 
 			// show the collection view; this doesn't really need to be in HERE necessarily,
 			// but doing this now for ease

@@ -1,9 +1,14 @@
 define(['backbone', 'underscore'], function(Backbone, _){
 
-	var FiltersPlugin = function(collection, filters) {
+	var FiltersPlugin = function(options) {
+
 		var self = this;
-		this.collection = collection;
-		this.filters = filters;
+		var options = options || {};
+
+		this.configuration = options.configuration;
+
+		this.collection = options.collection;
+		this.filters = options.filters;
 
 		// THIS SHOULD NOT TRIGGER WITH FILTER SELECTION
 		this.filters.on('change', function(){

@@ -27,7 +27,8 @@ define(['backbone','underscore','dust', 'filters/views/view.filter.hidden.item',
 			});
 
 			var data = {
-				label: "Hidden!" // TODO
+				label: "Hidden",
+				hasMatch: (subviews.length > 0)
 			};
 
 			dust.renderSource(hiddenTemplate, data, function(err, out){

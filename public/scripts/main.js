@@ -28,6 +28,6 @@ requirejs.config({
 });
 
 
-requirejs(['backbone', 'list/plugin.list'], function(Backbone, list){
+requirejs(['backbone', 'list/list'], function(Backbone, list){
 	list.startup();
 });
