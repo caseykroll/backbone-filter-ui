@@ -32,7 +32,7 @@ define(['backbone', 'underscore'], function(Backbone, _){
 		var self = this;
 
 		// the array of models to return as the filtered collection
-		var models = [];
+		var models = this.collection.models;
 
 		var filterMatchMap = {}; // matches by filter (not by filterOption)
 		var hiddenMatches = [];
@@ -53,35 +53,20 @@ define(['backbone', 'underscore'], function(Backbone, _){
 		// get the full array of identifiers matching all of the active filters (unique results)
 		var matches = _.intersection.apply(this, _.values(filterMatchMap));
 
-
-		// BEGIN THOUGHT ****
-		// TODO: WE CAN MAYBE REFACTOR THIS BLOCK, STARTING WITH THE FULL COLLECTION,
-		// THEN FILTERING FOR FILTER MATCHES, THEN FILTERING FOR HIDDEN
+		// if there are any active filter matches, filter out anything that doesn't match
 		if (matches.length) {
 			// return those models that exist in matches
 			models = this.collection.filter(function(model){
 				return(_.indexOf(matches, model.get('id')) !== -1);
 			});
-
-			// CULL THE HIDDEN VALUE
-			if (hiddenMatches.length){
-				models = models.filter(function(model){
-					return(_.indexOf(hiddenMatches, model.get('id')) === -1);
-				});
-			}
-
-		} else {
-
-			models = this.collection.models;
-
-			// CULL THE HIDDEN VALUE
-			if (hiddenMatches.length){
-				models = this.collection.filter(function(model){
-					return(_.indexOf(hiddenMatches, model.get('id')) === -1);
-				});
-			}
 		}
-		// END THOUGHT ****
+
+		// if there are any hidden matches, filter them out
+		if (hiddenMatches.length){
+			models = models.filter(function(model){
+				return(_.indexOf(hiddenMatches, model.get('id')) === -1);
+			});
+		}
 
 		// now we do the dreaded peek ahead shite
 		this.filters.each(function(filter){
