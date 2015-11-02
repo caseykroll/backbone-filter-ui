@@ -24,16 +24,7 @@ define(['backbone', 'underscore'], function(Backbone, _){
 	};
 
 	FiltersPlugin.prototype.getHiddenMatches = function() {
-
-		var hiddenMatches = [];
-
-		this.collection.each(function(item){
-			if (item.get('hidden')){
-				hiddenMatches.push(item.get('id'));
-			}
-		});
-
-		return hiddenMatches;
+		return _.pluck(this.collection.where({hidden: true}), 'id');
 	};
 
 	FiltersPlugin.prototype.getFilteredCollection = function() {
