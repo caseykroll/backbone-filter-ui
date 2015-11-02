@@ -5,8 +5,7 @@ define(['backbone', 'underscore'], function(Backbone, _){
 		var self = this;
 		var options = options || {};
 
-		this.configuration = options.configuration;
-
+		this.configuration = options.configuration || {};
 		this.collection = options.collection;
 		this.filters = options.filters;
 
@@ -41,8 +40,11 @@ define(['backbone', 'underscore'], function(Backbone, _){
 
 		var self = this;
 
+		var hiddenMatches = [];
 
-		var hiddenMatches = this.getHiddenMatches();
+		if (this.configuration.hiddenFilter){
+			hiddenMatches = this.getHiddenMatches();
+		}
 
 		var filterMatches = [];
 		var filterMatchMap = {}; // this is preferred, if we can get by not use filterMatches

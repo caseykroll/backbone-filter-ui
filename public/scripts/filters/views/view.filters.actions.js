@@ -24,14 +24,13 @@ define(['backbone',  'dust', 'text!templates/filters/filters.actions.dust'], fun
 				filtersActive = true;
 			}
 
-
-
 			return filtersActive;
 		},
 		clearFilters: function() {			
 			this.trigger('view:filters:clear');
 		},
 		render: function() {
+
 			var self = this;
 
 			if (this._checkFiltersActive()){

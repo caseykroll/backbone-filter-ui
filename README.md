@@ -25,6 +25,8 @@ What does the data look like?
 	- Optionally, if you wish to use a feature for showing and hiding list items, you just need to make use of a 'hidden' attribute on the item.
 
 
+Configured Filters
+
 - The filter collection needs to follow a particular format; for example:
 ```javascript
 	var sizeFilter = new FilterModel({
@@ -57,6 +59,14 @@ What does the data look like?
 	count: integer // an integer representing how many matches are still available for this option, given which other options are active
 ```
 
+Hidden Filter
+
+The hidden filter is different from the other filters, in that it doesn't have filter options, and doesn't rely on any kind of complicated matching.
+For this reason, the processing of the hidden filter and the rendering of its UI is kept completely separate form the other filters.
+It is completely optional of course, there is no need to include it; simply don't create the hidden view in your app.
+Processing of hidden items can be turned on/off in the filtering script by setting the hiddenFilter boolean on the filter configuration object, on filter initialization.
+For demo purposes it is defaulted to active for this demo.
+
 
 How to run this:
 
@@ -71,7 +81,6 @@ Point yourself at http://localhost:8080/filters.html
 
 Outstanding issues:
 
-- (bug) multiple rendering on startup
 - (feature) filterOption operations for less than, greater than (numeric values)
 - (feature) filterOption operations for text matching (starts with, contains)
 - (feature) allow filters with pre-defined matches

@@ -3,6 +3,8 @@ define(['backbone', 'filters/filters','list/views/view.list', 'filters/views/vie
 	var List = {
 		startup: function() {
 
+			var hiddenFilter = true;
+
 			// load the collection data (always hold all models)
 			var itemCollection = this.getTestCollection();
 
@@ -15,7 +17,10 @@ define(['backbone', 'filters/filters','list/views/view.list', 'filters/views/vie
 			// TODO: temp crap here.. apply this like a real plugin later on
 			var filtersUtil = new Filters({
 				collection: itemCollection, 
-				filters: filterCollection
+				filters: filterCollection,
+				configuration: {
+					hiddenFilter : hiddenFilter
+				}
 			});
 
 			// show the collection view; this doesn't really need to be in HERE necessarily,

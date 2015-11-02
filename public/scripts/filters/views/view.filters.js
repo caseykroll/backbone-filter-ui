@@ -9,6 +9,7 @@ define(['backbone', 'filters/views/view.filter.checkbox', 'filters/views/view.fi
 			this.createSubviews();
 		},
 		render: function() {
+
 			var self = this;
 
 			self.$el.html('');
