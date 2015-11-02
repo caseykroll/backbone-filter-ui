@@ -1,5 +1,5 @@
 <div class="checkbox">
 	<label>
-    	<input type="checkbox" {?active}checked{/active} {?disabled}disabled{/disabled}>{label}</input> <span>({peekCount})</span>
+    	<input type="checkbox" {?active}checked{/active} {?disabled}disabled{/disabled}>{label}</input> <span>({count})</span>
 	</label>
 </div>

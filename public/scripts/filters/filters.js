@@ -110,7 +110,7 @@ define(['backbone', 'underscore'], function(Backbone, _){
 					var activePeekMatches = _.intersection(filterOption.get('filterMatches'), visibleMatches);
 
 					filterOption.set({
-						peekCount: activePeekMatches.length
+						count: activePeekMatches.length
 					});
 				}
 			});
@@ -141,7 +141,7 @@ define(['backbone', 'underscore'], function(Backbone, _){
 	FiltersPlugin.prototype.evaluateFilterOptionPeek = function(filter, filterOption, filterMatchMap, matches, hiddenMatches){
 
 		var disabled = true;
-		var peekCount = 0;
+		var count = 0;
 		var peekMatches = [];
 
 		if (matches.length){
@@ -152,13 +152,9 @@ define(['backbone', 'underscore'], function(Backbone, _){
 
 				peekMatches = _.intersection(filterOption.get('filterMatches'), matches);
 				peekMatches = _.difference(peekMatches, hiddenMatches);
-				peekCount = peekMatches.length;
+				count = peekMatches.length;
+				disabled = count === 0;
 
-				//peekCount = _.intersection(filterOption.get('filterMatches'), matches).length;
-
-				//TODO: removing the hidden ones...
-
-				disabled = peekCount === 0;
 			} else {
 
 				// evaluate the inactive options for the active filter
@@ -175,27 +171,20 @@ define(['backbone', 'underscore'], function(Backbone, _){
 
 				peekMatches = _.difference(matchesWithOption, matches);
 				peekMatches = _.difference(peekMatches, hiddenMatches);
-				peekCount = peekMatches.length;
-
-				//peekCount = _.difference(matchesWithOption, matches).length;
-
-				//TODO: removing the hidden ones...
-
-				disabled = peekCount === 0;
+				count = peekMatches.length;
+				disabled = (count === 0);
 			}
 
 		} else {
 
 			peekMatches = _.difference(filterOption.get('filterMatches'), hiddenMatches);
-			peekCount = peekMatches.length;
-
-			//peekCount = filterOption.get('filterMatches').length;
-			disabled = peekCount === 0;
+			count = peekMatches.length;
+			disabled = (count === 0);
 		}
 
 
 		filterOption.set({
-			peekCount: peekCount,
+			count: count,
 			disabled: disabled
 		});
 	};

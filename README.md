@@ -52,7 +52,7 @@ What does the data look like?
 	matches: [] // an array of item ids which were found to match the filterOption
 	active: boolean // default is false, true when the option is "checked"
 	disabled: boolean // default is false, true when the selecting of other filter options excludes this option
-	peekCount: integer // TODO: This is a bad name, should really just be an integer representing how many matches are still available for this option, given which other options are active
+	count: integer // an integer representing how many matches are still available for this option, given which other options are active
 ```
 
 

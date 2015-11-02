@@ -17,7 +17,7 @@ define(['backbone', 'dust', 'text!templates/filters/radio.option.dust'], functio
 
 			var data = {
 				disabled: (this.model.get('disabled') || false),
-				peekCount: this.model.get('peekCount'),
+				count: this.model.get('count'),
 				active: this.model.get('active'),
 				label: this.model.get('label'),
 				value: this.model.get('value'),

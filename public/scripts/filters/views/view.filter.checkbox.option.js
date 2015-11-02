@@ -16,7 +16,7 @@ define(['backbone', 'dust', 'text!templates/filters/checkbox.option.dust'], func
 
 			var data = {
 				disabled: (this.model.get('disabled') || false),
-				peekCount: this.model.get('peekCount'),
+				count: this.model.get('count'),
 				active: this.model.get('active'),
 				label: this.model.get('label')
 			};

@@ -4,7 +4,7 @@
 <div class="select">
 	<select>
 		{#options}
-			<option {?disabled}disabled{/disabled} {?active}selected{/active} {?value}value="{value}"{/value}>{label} {?value}({peekCount}){/value}</option>
+			<option {?disabled}disabled{/disabled} {?active}selected{/active} {?value}value="{value}"{/value}>{label} {?value}({count}){/value}</option>
 		{/options}
 	</select>
 </div>
