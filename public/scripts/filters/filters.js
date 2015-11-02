@@ -43,6 +43,8 @@ define(['backbone', 'underscore'], function(Backbone, _){
 		this.filters.each(function(filter){
 			if (filter.isActive()){
 				var filterModelMatches = filter.getFilterMatches();
+
+				// you can't remove the hidden ones at this point, we always need to filter down by selection first
 				filterMatchMap[filter.get('id')] = filterModelMatches;
 			}
 		});
@@ -65,91 +67,58 @@ define(['backbone', 'underscore'], function(Backbone, _){
 			});
 		}
 
-		// now we do the dreaded peek ahead shite
+		// determine the new counts for the filterOptions; we need the current filtered set for this
 		this.filters.each(function(filter){
 			filter.filterOptions.each(function(filterOption){
 
+				// this gets a bit funky
+				var count = self._getFilterOptionCount(filterOption, filter, matches, hiddenMatches, filterMatchMap);
 
-				// TODO: this is kind of crap, we still need peek values on selected items too, no? in case items are hidden?
-
-				if (filterOption.get('active') !== true){
-					// check if this filter should be disabled
-					self.evaluateFilterOptionPeek(filter, filterOption, filterMatchMap, matches, hiddenMatches);
-				} else {
-
-					// in the full set of filtered plans, how many do I match?
-					// TODO: do this for count processing in general
-					var visibleMatches = _.difference(matches, hiddenMatches);
-					var activePeekMatches = _.intersection(filterOption.get('filterMatches'), visibleMatches);
-
-					filterOption.set({
-						count: activePeekMatches.length
-					});
-				}
+				// disable the option if it wasn't already selected and adds nothing.
+				filterOption.set({
+					count: count,
+					disabled: (!filterOption.get('active') && (count === 0))
+				});
 			});
 		});
 
 		return models;
 	};
 
+	FilterUtility.prototype._getFilterOptionCount = function(filterOption, filter, currentMatches, hiddenMatches, matchesByFilter) {
 
-	// TODO: for peek, send the map without the option's filter
-	FilterUtility.prototype.getMatchSetFromMap = function(filterMatchMap) {
-
-		var filterMatches = _.values(filterMatchMap);
-		var matches = _.intersection.apply(this, filterMatches);
-		return matches;
-	};
-
-	FilterUtility.prototype.evaluateFilterOptionPeek = function(filter, filterOption, filterMatchMap, matches, hiddenMatches){
-
-		var disabled = true;
 		var count = 0;
-		var peekMatches = [];
 
-		if (matches.length){
+		var filterOptionActive = filterOption.get('active');
+		var filterOptionMatches = filterOption.get('filterMatches');
 
-			if (!filter.isActive()){
-				// if I am an inactive filter, then for each inactive option, find the number of matches for the option
-				// WITHIN the current matches
+		var filterId = filter.get('id');
+		var filterActive = filter.isActive();
 
-				peekMatches = _.intersection(filterOption.get('filterMatches'), matches);
-				peekMatches = _.difference(peekMatches, hiddenMatches);
-				count = peekMatches.length;
-				disabled = count === 0;
 
-			} else {
-
-				// evaluate the inactive options for the active filter
-
-				// when a filter is active, then find out how many more items we would see if it was picked
-				// weird in CHECKBOX groups, we go from being restrictive to additive
-
-				var filterMatches = _.clone(filterMatchMap);
-				var currentMatch = filterMatches[filter.get('id')] || [];
-
-				// let's find the matches with our value added to the GROUP
-				filterMatches[filter.get('id')] = _.uniq(currentMatch.concat(filterOption.get('filterMatches')));
-				var matchesWithOption = this.getMatchSetFromMap(filterMatches);
-
-				peekMatches = _.difference(matchesWithOption, matches);
-				peekMatches = _.difference(peekMatches, hiddenMatches);
-				count = peekMatches.length;
-				disabled = (count === 0);
-			}
-
+		if (currentMatches.length === 0) {
+			count = _.difference(filterOptionMatches, hiddenMatches).length;
+		}
+		else if (filterOptionActive || !filterActive){
+			count = _.difference(_.intersection(filterOptionMatches, currentMatches), hiddenMatches).length;
 		} else {
+			// something else in the filter "group" has been selected; this is the most complicated case, because now we need 
+			// to simulate what would happen if this option was selected with the current active option(s) in our group.
+			var peekMatchMap = _.clone(matchesByFilter); // don't mangle this is place, there are more options to check.
+			var currentGroupMatch = peekMatchMap[filterId] || []; // what does our group currently match up to?
 
-			peekMatches = _.difference(filterOption.get('filterMatches'), hiddenMatches);
+			// let's find the matches with our value added to the group
+			peekMatchMap[filterId] = _.uniq(currentGroupMatch.concat(filterOptionMatches));
+			
+			// now determine what the full set would have looked like
+			var matchesWithOption = _.intersection.apply(this, _.values(peekMatchMap));
+
+			// what changes if we do that?
+			var peekMatches = _.difference(_.difference(matchesWithOption, currentMatches), hiddenMatches);
 			count = peekMatches.length;
-			disabled = (count === 0);
 		}
 
-
-		filterOption.set({
-			count: count,
-			disabled: disabled
-		});
+		return count;
 	};
 
 	/*
