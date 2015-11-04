@@ -51,7 +51,9 @@ Configured Filters
 		}]
 	});
 ```
+
 	Once the evaluation is run, the filterOptions (which will be converted to Backbone.Models) will have additional attributes reflecting
+	
 ```javascript
 	matches: [] // an array of item ids which were found to match the filterOption
 	active: boolean // default is false, true when the option is "checked"
