@@ -52,7 +52,7 @@ Configured Filters
 	});
 ```
 
-Once the evaluation is run, the filterOptions (which will be converted to Backbone.Models) will have additional attributes reflecting
+Once the evaluation is run, the filterOptions (which will be converted to Backbone.Models) will have additional attributes reflecting the following:
 	
 ```javascript
 	matches: [] // an array of item ids which were found to match the filterOption
