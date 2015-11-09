@@ -83,7 +83,6 @@ Point yourself at http://localhost:8080/filters.html
 
 Outstanding issues:
 
-- (feature) filterOption operations for less than, greater than (numeric values)
 - (feature) filterOption operations for text matching (starts with, contains)
 - (feature) allow filters with pre-defined matches
 - (feature) defaults on init
