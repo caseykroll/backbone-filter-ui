@@ -39,6 +39,26 @@
 		"operation":"equals"
 	}]
 },{
+	"id": "cost",
+	"type": "radio",
+	"label": "Cost",
+	"evalType": "data", 
+	"property": "cost",
+	"alwaysVisible": true,
+	"filterOptions": [{
+		"label": "Under $60",
+		"value": 50.00,
+		"operation":"less"
+	},{
+		"label": "$60 to $109",
+		"value": [60,110],
+		"operation":"between"
+	},{
+		"label": "$110 and above",
+		"value": [110,999],
+		"operation":"between"
+	}]
+},{
 	"id": "material_filter",
 	"type": "select",
 	"label": "Material",

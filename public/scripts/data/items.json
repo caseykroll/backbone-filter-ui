@@ -4,7 +4,7 @@
 	"description": "A large red kitchen table.",
 	"color": "red",
 	"size": "lg",
-	"cost": "120.00",
+	"cost": 120.00,
 	"material": "pine"
 },{
 	"id": 2,
@@ -12,7 +12,7 @@
 	"description": "A brown coffee table.",
 	"color": "brown",
 	"size": "md",
-	"cost": "60.00",
+	"cost": 60.00,
 	"material": "pine"
 },{
 	"id": 3,
@@ -20,7 +20,7 @@
 	"description": "A brown end table.",
 	"color": "brown",
 	"size": "sm",
-	"cost": "40.00",
+	"cost": 40.00,
 	"material": "mahogany"
 },{
 	"id": 4,
@@ -28,6 +28,6 @@
 	"description": "A large brown kitchen table.",
 	"color": "brown",
 	"size": "lg",
-	"cost": "110.00",
+	"cost": 110.00,
 	"material": "oak"
 }]

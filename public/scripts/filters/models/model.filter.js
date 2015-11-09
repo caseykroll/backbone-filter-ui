@@ -46,6 +46,30 @@ define(['backbone', 'underscore'], function(Backbone, _){
 							if (filterValue === itemValue){
 								filterMatches.push(item.get('id'));
 							}
+						} else if (operation === 'less'){
+							if (itemValue < filterValue){
+								filterMatches.push(item.get('id'));
+							}
+						} else if (operation === 'between'){
+
+							// TODO: add configuration to make the upper and lower bounds inclusive/exclusive
+
+							// defaulting to the most likely case for dollar amounts,
+							// in which case the filter will likely be made completely of ranges.
+							// making the low range inclusive
+							
+							// filter value must be an array
+							// TODO: array type check and exception
+
+							var lowVal = filterValue[0];
+							var highVal = filterValue[1];
+							if (itemValue >= lowVal && itemValue < highVal) {
+								filterMatches.push(item.get('id'));
+							}
+						} else if (operation === 'greater'){
+							if (itemValue > filterValue){
+								filterMatches.push(item.get('id'));
+							}
 						}
 					}
 
