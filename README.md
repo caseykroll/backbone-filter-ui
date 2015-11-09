@@ -38,8 +38,8 @@ Configured Filters
 		alwaysVisible: false,	// whether or not to display the filter even if there are no possible matches in the unfiltered list
 		filterOptions: [{		// different values within the filter, each managed independently
 			label : 'Small',		// the label to display for the indivual filterOption
-			value : 'sm',			// the value that will be evaluated against the item attribute matching the filter property
-			operation: 'equals'		// how the "match" will be evaluated; e.g. "equals" means the value matches excactly the item attribute value
+			value : 'sm',			// the value that will be evaluated against the item attribute matching the filter property. If the operation it 'between', this should be an array of two values, the low limit (inclusive) andthe high limit (exclusive)
+			operation: 'equals'		// how the "match" will be evaluated; e.g. "equals" means the value matches excactly the item attribute value. Possible values are 'less', 'equals', 'greater', and 'between', where between handles a range, with the bottom end being inclusive. 
 		},{
 			label : 'Medium',
 			value : 'md',
